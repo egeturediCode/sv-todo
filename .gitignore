@@ -1,0 +1,20 @@
+# Sanal ortam klasörü
+/musicApp_env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Veritabanı dosyası
+*.sqlite3
+
+# IDE dosyaları
+.vscode/
+.idea/
+
+# Log dosyaları
+.DS_Store
+
+*.env
