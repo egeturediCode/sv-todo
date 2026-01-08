@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Smart & Vulnerable ToDo</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Task List</h1>
+        <div id="todo-app">
+            <div style="width: 100%; display: flex; justify-content: space-between;">
+                <input type="text" id="task-title" placeholder="Add a new task..." />
+                <button onclick="createTask()" id="add-task-btn">Add</button>
+            </div>
+            <div id="task-list">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
