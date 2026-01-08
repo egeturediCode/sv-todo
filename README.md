@@ -43,6 +43,16 @@ SmartTodo/
 ```
 ---
 
+## AI Powered Features
+
+Auto-Breakdown: Users can input a vague goal like "Learn Python", and the AI Backend will generate specific sub-tasks via API.
+
+Smart Suggestions: Content-aware task descriptions.
+
+Security Angle: This module will also serve as a lab for Prompt Injection attacks (Tricking the AI into revealing system instructions).
+
+---
+
 ## Security Laboratory (Vulnerabilities)
 
 The project serves as a practice target (CTF style) for identifying and exploiting web vulnerabilities.
@@ -93,7 +103,61 @@ The project serves as a practice target (CTF style) for identifying and exploiti
 
 ---
 
+### Steps
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/egeturediCode/sv-todo.git
+    cd svTodo
+    ```
+
+2. Create and activate a virtual environment:
+    ```bash
+    python3 -m venv env
+    source env/bin/activate  # Mac/Linux
+    venv\Scripts\activate.bat # Windows
+    ```
+
+3. Install the required packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Run the code to create secret_key:
+    ```bash
+    python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    ```
+    Chenge the key on settings.py. SECRET_KEY = config('DJANGO_SECRET_KEY') = SECRET_KEY = 'new_key'
+
+5. To create an admin user:
+    ```bash
+    python3 manage.py createsuperuser
+    ```
+
+6. Apply database migrations:
+    ```bash
+    cd svTodo
+    python3 manage.py makemigrations
+    python3 manage.py migrate
+    ```
+
+7. Run the development server:
+    ```bash
+    python3 manage.py runserver
+    ```
+
+8. Open your browser and go to `http://127.0.0.1:8000/admin`.
+
+---
+
 ##  Licence
 DO NOT USE THIS CODE IN PRODUCTION!
 
 This application contains intentional security flaws (SQL Injection, etc.) for educational purposes. Running this code on a public server exposes it to attacks. Use it only in a safe, local environment.
+
+## Contact
+
+If you have any questions or suggestions, feel free to reach out:  
+[GitHub Profile](https://github.com/egeturediCode)
+
+---
