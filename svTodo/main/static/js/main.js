@@ -25,25 +25,29 @@ function getTasks() {
     .then(response => response.json()) 
     .then(data => {
         const container = document.querySelector('#task-list');
+        const subtasksContainer = document.querySelector('#subtasks');
         container.innerHTML = '';
+        subtasksContainer.innerHTML = '';
 
         data.forEach(task => {
             const item = `
-                <div class="task-item" style="flex-direction:column; align-items:flex-start;">
+                <div class="task-item">
                     <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <h3>${task.title}</h3>
-                            <p>${task.description}</p>
                             <small>Durum: ${task.is_completed ? 'Tamamlandı' : 'Yapılacak'}</small>
                         </div>
-                        <button onclick="askAI('${task.title}', this)" style="background:#6f42c1; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">
-                            AI Analiz
+                        <button onclick="askAI('${task.title}', this)" style="background:var(--color2); color: #171717; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">
+                            Analyze
                         </button>
                     </div>
-                    <div id="ai-result-${task.id}" style="margin-left:20px; color:#aaa; font-size:0.9em; width:100%;"></div>
                 </div>
             `;
+            const itemResult = `
+                <div id="ai-result-${task.id}" class="ai-result"></div>
+            `;
             container.innerHTML += item;
+            subtasksContainer.innerHTML += itemResult;
         });
     })
     .catch(error => console.error('Hata:', error));
@@ -94,10 +98,10 @@ function askAI(taskTitle, btnElement) {
     })
     .then(response => response.json())
     .then(data => {
-        const resultDiv = btnElement.parentElement.parentElement.querySelector('div[id^="ai-result-"]');
+        const resultDiv = document.querySelector('div[id^="ai-result-"]');
         
         if (data.subtasks) {
-            let html = "<ul style='margin-top:10px;'>";
+            let html = "<ul class='ai-result-item'>";
             data.subtasks.forEach(sub => {
                 html += `<li>${sub}</li>`;
             });

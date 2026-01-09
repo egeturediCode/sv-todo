@@ -57,7 +57,7 @@ def ai_breakdown(request):
         return Response({"error": "API Anahtarı hatası: " + str(e)}, status=500)
 
     # ZAFİYET: main_task hiçbir filtreleme olmadan prompt'a giriyor.
-    system_instruction = "Sen yardımcı bir asistanısn. Verilen görevi gerçekleştirmek için 4 kısa, uygulanabilir alt adım listele. Sadece maddeleri yaz, giriş cümlesi kurma."
+    system_instruction = "Sen yardımcı bir asistanısn. Verilen görevi gerçekleştirmek için 7 kısa, uygulanabilir alt adım listele. Sadece maddeleri yaz, giriş cümlesi kurma."
     
     try:
         chat_completion = client.chat.completions.create(
@@ -76,7 +76,6 @@ def ai_breakdown(request):
 
         # 4. Gelen Cevabı İşle
         content = chat_completion.choices[0].message.content
-        
         raw_lines = content.split('\n')
         
         subtasks = []

@@ -9,13 +9,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>Task List</h1>
-        <div id="todo-app">
-            <div style="width: 100%; display: flex; justify-content: space-between;">
-                <input type="text" id="task-title" placeholder="Add a new task..." />
-                <button onclick="createTask()" id="add-task-btn">Add</button>
+        <div class="container-left">
+            <h1>Smart & Vulnerable ToDo</h1>
+            <div id="todo-app">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <input type="text" id="task-title" placeholder="Add a new task..." />
+                    <button onclick="createTask()" id="add-task-btn">Add</button>
+                </div>
+                <div id="task-list">
+                </div>
             </div>
-            <div id="task-list">
+        </div>
+        <div class="container-right">
+            <div class="top">
+                <h1>AI-Generated Subtasks</h1>
+                <div id="subtasks">
+                </div>
+            </div>
+            <div class="bottom">
+                <h1>Search Tasks</h1>
+                <div id="search-tasks">
+                </div>
             </div>
         </div>
     </div>
