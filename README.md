@@ -95,6 +95,8 @@ The project serves as a practice target (CTF style) for identifying and exploiti
 
 - API: Django REST Framework (DRF)
 
+- AI: GROQ API
+
 - Database: SQLite (Default)
 
 - Frontend: HTML5, CSS3, JavaScript (ES6+)
