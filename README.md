@@ -19,6 +19,8 @@ The application follows a **Decoupled Architecture**:
 
 **The twist?** While some parts follow industry best practices (ORM, Serializers), specific modules contain **intentional security vulnerabilities** (like SQL Injection) to demonstrate how attacks occur and how to patch them.
 
+![screenshot](screenshot.png)
+
 ---
 
 ## Architecture
