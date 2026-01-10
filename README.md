@@ -82,9 +82,9 @@ The project serves as a practice target (CTF style) for identifying and exploiti
 
 ---
 
-### 3- IDOR (Insecure Direct Object References) [Planned]
+### 3. AI Prompt Injection
 
-- **Goal:** Simulating a scenario where User A can read/delete User B's tasks by manipulating the ID in the API call.
+- **The Flaw**: The backend directly concatenates user input (task title) into the system prompt sent to the LLM (Groq/Llama-3) without sanitization or delimiters. This lack of separation between "instruction" and "data" allows users to override the system's original behavior.
 
 ---
 

@@ -26,8 +26,11 @@ function getTasks() {
     .then(data => {
         const container = document.querySelector('#task-list');
         const subtasksContainer = document.querySelector('#subtasks');
-        container.innerHTML = '';
-        subtasksContainer.innerHTML = '';
+        const defInfo = subtasksContainer.querySelector('.def-info');
+        const defInfoHTML = defInfo ? defInfo.outerHTML : '';
+
+        let tasksHTML = '';
+        let resultsHTML = defInfoHTML;
 
         data.forEach(task => {
             const item = `
@@ -35,20 +38,22 @@ function getTasks() {
                     <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <h3>${task.title}</h3>
-                            <small>Durum: ${task.is_completed ? 'Tamamlandı' : 'Yapılacak'}</small>
+                            <small>Status: ${task.is_completed ? 'Completed' : 'To Do'}</small>
                         </div>
-                        <button onclick="askAI('${task.title}', this)" style="background:var(--color2); color: #171717; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">
+                        <button onclick="askAI(${task.id}, this)" style="background:var(--color2); color: #171717; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">
                             Analyze
                         </button>
                     </div>
                 </div>
             `;
-            const itemResult = `
-                <div id="ai-result-${task.id}" class="ai-result"></div>
-            `;
-            container.innerHTML += item;
-            subtasksContainer.innerHTML += itemResult;
+            const itemResult = `<div id="ai-result-${task.id}" class="ai-result"></div>`;
+
+            tasksHTML += item;
+            resultsHTML += itemResult;
         });
+
+        container.innerHTML = tasksHTML;
+        subtasksContainer.innerHTML = resultsHTML;
     })
     .catch(error => console.error('Hata:', error));
 }
@@ -83,10 +88,13 @@ function createTask() {
     });
 }
 
-function askAI(taskTitle, btnElement) {
+function askAI(taskId, btnElement) {
     const originalText = btnElement.innerText;
     btnElement.innerText = "Thinking...";
     btnElement.disabled = true;
+
+    const taskItem = btnElement.closest('.task-item');
+    const taskTitle = taskItem ? taskItem.querySelector('h3').innerText : '';
 
     fetch('/api/ai-analyze/', {
         method: 'POST',
@@ -98,17 +106,31 @@ function askAI(taskTitle, btnElement) {
     })
     .then(response => response.json())
     .then(data => {
-        const resultDiv = document.querySelector('div[id^="ai-result-"]');
+        const resultDiv = document.getElementById(`ai-result-${taskId}`);
+        const defInfo = document.querySelector('#subtasks .def-info');
         
+        if (!resultDiv) return;
+
+        document.querySelectorAll('.ai-result').forEach(d => {
+            if (d.id !== `ai-result-${taskId}`) d.innerHTML = '';
+        });
+
         if (data.subtasks) {
             let html = "<ul class='ai-result-item'>";
             data.subtasks.forEach(sub => {
                 html += `<li>${sub}</li>`;
             });
             html += "</ul>";
+
             resultDiv.innerHTML = html;
+            if (defInfo) {
+                defInfo.style.display = 'none';
+            }
         } else {
             resultDiv.innerText = "There is not any suggestion.";
+            if (defInfo) {
+                defInfo.style.display = 'flex';
+            }
         }
     })
     .catch(err => {
@@ -118,4 +140,34 @@ function askAI(taskTitle, btnElement) {
         btnElement.innerText = originalText;
         btnElement.disabled = false;
     });
+}
+
+
+function searchTasks() {
+    const query = document.getElementById('search-box').value;
+    const container = document.querySelector('#search-list');
+
+    fetch(`/api/search/?query=${query}`)
+    .then(response => response.json())
+    .then(data => {
+        container.innerHTML = '';
+
+        if (data.length === 0) {
+            container.innerHTML = '<p style="text-align:center;">No results found.</p>';
+            return;
+        }
+
+        data.forEach(task => {
+            const item = `
+                <div class="task-item">
+                    <div>
+                        <h3>${task.title}</h3>
+                        <small>Durum: ${task.is_completed ? 'Completed' : 'To Do'}</small>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += item;
+        });
+    })
+    .catch(error => console.error('Hata:', error));
 }

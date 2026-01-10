@@ -24,11 +24,24 @@
             <div class="top">
                 <h1>AI-Generated Subtasks</h1>
                 <div id="subtasks">
+                    <div class="def-info" style="display: flex;">
+                        <p>Select a task and click "Analyze" to generate AI-based subtasks.</p>
+                    </div>
                 </div>
             </div>
             <div class="bottom">
                 <h1>Search Tasks</h1>
-                <div id="search-tasks">
+                <div id="search-tasks" style="margin-top: -30px;">
+                    <div class="search-tasks">
+                        <input type="text" id="search-box" placeholder="Search tasks (SQL Injection here)..." 
+                            style="flex-grow: 1; padding: 8px; border-radius: 7px; border: 1px solid #ccc;">
+                        <button onclick="searchTasks()" 
+                                style="padding: 8px 15px; background: var(--color2); color: #171717; border: none; border-radius: 7px; cursor: pointer;">
+                            Search
+                        </button>
+                    </div>
+                    <div id="search-list">
+                    </div>
                 </div>
             </div>
         </div>

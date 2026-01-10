@@ -83,6 +83,10 @@ body {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    max-height: 410px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .task-item {
@@ -118,23 +122,47 @@ body {
 
 .container-right .top h1 {
     text-align: flex-start;
-    padding: 12px 24px;
+    padding: 0px 24px;
     font-size: 32px;
     color: var(--color1);
+}
+
+.container-right .top h1::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: var(--color1);
+    margin: 10px 0;
+    width: 100%;
 }
 
 .container-right .top .ai-result {
     width: 100%;
     color: #171717;
+    display: flex;
+    align-items: flex-start;
+    margin-top: 0px;
+}
+
+#subtasks .def-info {
+    width: 100%;
+    margin-top: 70px;
+    display: flex;
+    font-size: 16px;
+    color: var(--color1);
+    text-align: center;
+    justify-content: center;
+
 }
 
 .container-right .top .ai-result .ai-result-item {
-    margin-top: 10px;
-  
+    width: 100%;
 }
 .container-right .top .ai-result .ai-result-item li {
     list-style: none;
     font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 800;
 }
 
 .container-right .bottom {
@@ -146,7 +174,43 @@ body {
 
 .container-right .bottom h1 {
     text-align: flex-start;
-    padding: 12px 24px;
-    font-size: 32px;
+    padding: 0px 24px;
+    font-size: 25px;
     color: var(--color1);
+}
+
+.container-right .bottom h1::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: var(--color1);
+    margin-top: 10px;
+    width: 100%;
+}
+
+.container-right .bottom .search-tasks {
+    gap: 30px;
+    width: 94%;
+    color: #171717;
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+    padding: 20px;
+}
+
+.container-right .bottom #search-tasks #search-list {
+    color: var(--color1);
+    background-color: #171717;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 204px;
+    max-height: 204px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.container-right .bottom #search-tasks #search-list h3 {
+    font-size: 16px;
 }

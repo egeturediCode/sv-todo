@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny
+from django.db import connection
 
 from groq import Groq
 from decouple import config
@@ -89,3 +90,28 @@ def ai_breakdown(request):
 
     except Exception as e:
         return Response({"error": "AI Servis Hatası: " + str(e)}, status=500)
+    
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def unsafe_search(request):
+    query = request.GET.get('query', '')
+
+    # --- ZAFİYET BURADA ---
+    sql_query = f"SELECT * FROM api_task WHERE title LIKE '%{query}%'"
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+    
+    results = []
+    for row in rows:
+        results.append({
+            "id": row[0],
+            "title": row[1],
+            "description": row[2],
+            "is_completed": bool(row[3]),
+        })
+
+    return Response(results)
